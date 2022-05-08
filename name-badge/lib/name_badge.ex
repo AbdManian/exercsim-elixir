@@ -1,5 +1,13 @@
 defmodule NameBadge do
+
+  defp dep_name(nil), do: "OWNER"
+  defp dep_name(name), do: String.upcase(name)
+
+  defp id_str(nil), do: ""
+  defp id_str(id), do: "[#{id}] - "
+
+
   def print(id, name, department) do
-    # Please implement the print/3 function
+    "#{id_str(id)}#{name} - #{dep_name(department)}"
   end
 end
