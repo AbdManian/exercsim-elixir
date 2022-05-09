@@ -1,65 +1,54 @@
 defmodule DateParser do
-  def day() do
-    # Please implement the day/0 function
-  end
+  @spec day :: <<_::216>>
+  def day(), do: "^(0?[1-9]|[12][0-9]|3[01])$"
 
-  def month() do
-    # Please implement the month/0 function
-  end
+  def month(), do: "^(0?[1-9]|1[0-2])$"
 
-  def year() do
-    # Please implement the year/0 function
-  end
+  def year(), do: "[0-9]{4}"
 
-  def day_names() do
-    # Please implement the day_names/0 function
-  end
+  def day_names(), do: ~S"(Monday|Tuesday|Sunday|Wednesday|Thursday|Friday|Saturday)"
 
-  def month_names() do
-    # Please implement the month_names/0 function
-  end
+  def month_names(),
+    do:
+      ~S"(January|February|March|April|May|June|July|August|September|October|November|December)"
 
-  def capture_day() do
-    # Please implement the capture_day/0 function
-  end
+  def capture_day(), do: "(?<day>0?[1-9]|[12][0-9]|3[01])"
 
-  def capture_month() do
-    # Please implement the capture_month/0 function
-  end
+  def capture_month(), do: "(?<month>0?[1-9]|1[0-2])"
 
-  def capture_year() do
-    # Please implement the capture_year/0 function
-  end
+  def capture_year(), do: "(?<year>[0-9]{4})"
 
-  def capture_day_name() do
-    # Please implement the capture_day_name/0 function
-  end
+  def capture_day_name(),
+    do: ~S"\s*(?<day_name>Monday|Tuesday|Sunday|Wednesday|Thursday|Friday|Saturday)\s*"
 
-  def capture_month_name() do
-    # Please implement the capture_month_name/0 function
-  end
+  def capture_month_name(),
+    do:
+      ~S"\s*(?<month_name>January|February|March|April|May|June|July|August|September|October|November|December)\s*"
 
-  def capture_numeric_date() do
-    # Please implement the capture_numeric_date/0 function
-  end
+  def capture_numeric_date(),
+    do: ~S"(?<day>0[1-9]|[12][0-9]|3[01])/(?<month>0[1-9]|1[0-2])/(?<year>[0-9]{4})"
 
   def capture_month_name_date() do
-    # Please implement the capture_month_name_date/0 function
+    "#{capture_month_name()} #{capture_day()}, #{capture_year()}"
   end
 
   def capture_day_month_name_date() do
-    # Please implement the capture_day_month_name_date/0 function
+    "#{capture_day_name()}, #{capture_month_name_date()}"
+  end
+
+  defp narrow_regex_build(func) do
+    Regex.compile!("^#{func.()}$")
   end
 
   def match_numeric_date() do
-    # Please implement the match_numeric_date/0 function
+    narrow_regex_build(&capture_numeric_date/0)
   end
 
   def match_month_name_date() do
-    # Please implement the match_month_name_day/0 function
+    narrow_regex_build(&capture_month_name_date/0)
   end
 
   def match_day_month_name_date() do
-    # Please implement the match_day_month_name_date/0 function
+    narrow_regex_build(&capture_day_month_name_date/0)
   end
 end
