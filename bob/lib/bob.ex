@@ -1,15 +1,16 @@
 defmodule Bob do
-  defp is_all_caps(input) do
-    input == String.upcase(input) and input =~ ~r/\p{Lu}/
+  defp all_caps?(input) do
+    input == String.upcase(input) and input != String.downcase(input)
   end
 
   @spec hey(String.t()) :: String.t()
   def hey(input) do
+    input = String.trim(input)
     cond do
-      is_all_caps(input) and String.ends_with?(input, "?") -> "Calm down, I know what I'm doing!"
-      input |> String.trim() |> String.ends_with?("?") -> "Sure."
-      is_all_caps(input) -> "Whoa, chill out!"
-      String.trim(input) == "" -> "Fine. Be that way!"
+      all_caps?(input) and String.ends_with?(input, "?") -> "Calm down, I know what I'm doing!"
+      String.ends_with?(input, "?") -> "Sure."
+      all_caps?(input) -> "Whoa, chill out!"
+      input == "" -> "Fine. Be that way!"
       true -> "Whatever."
     end
   end
