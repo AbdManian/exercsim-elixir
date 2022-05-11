@@ -17,9 +17,7 @@ defmodule ResistorColorDuo do
   """
   @spec value(colors :: [atom]) :: integer
 
-  def value([first, second]) do
+  def value([first, second | _]) do
     @color_table[first] * 10 + @color_table[second]
   end
-
-  def value([first, second, _]), do: value([first, second])
 end
