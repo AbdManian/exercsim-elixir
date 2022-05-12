@@ -8,13 +8,14 @@ defmodule SquareRoot do
   end
 
   defp calculate(s, e, r) do
-    mid = div(s+e, 2)
+    mid = div(s + e, 2)
+
     cond do
-      s*s == r -> s
-      e*e == r -> e
+      s * s == r -> s
+      e * e == r -> e
       s >= e -> nil
-      mid*mid >= r -> calculate(s, mid, r)
-      true -> calculate(mid+1, e, r)
+      mid * mid >= r -> calculate(s, mid, r)
+      true -> calculate(mid + 1, e, r)
     end
   end
 end
