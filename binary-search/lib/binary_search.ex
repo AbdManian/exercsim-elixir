@@ -24,14 +24,9 @@ defmodule BinarySearch do
 
   defp binary_search({}, _, _, _), do: :not_found
 
-  defp binary_search(numbers, start_index, end_index, key)
-       when start_index == end_index or start_index + 1 == end_index do
-    cond do
-      elem(numbers, start_index) == key -> {:ok, start_index}
-      elem(numbers, end_index) == key -> {:ok, end_index}
-      true -> :not_found
-    end
-  end
+  defp binary_search(_, start_index, end_index, _)
+       when end_index < start_index,
+       do: :not_found
 
   defp binary_search(numbers, start_index, end_index, key) do
     mid = div(start_index + end_index, 2)
@@ -39,8 +34,8 @@ defmodule BinarySearch do
 
     cond do
       mid_val == key -> {:ok, mid}
-      mid_val > key -> binary_search(numbers, start_index, mid, key)
-      true -> binary_search(numbers, mid, end_index, key)
+      mid_val > key -> binary_search(numbers, start_index, mid - 1, key)
+      true -> binary_search(numbers, mid + 1, end_index, key)
     end
   end
 end
