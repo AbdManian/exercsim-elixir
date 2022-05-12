@@ -1,10 +1,10 @@
 defmodule RationalNumbers do
   @type rational :: {integer, integer}
 
-  defp reduce(a, b) when b<0, do: reduce(-a, -b)
+  defp reduce(a, b) when b < 0, do: reduce(-a, -b)
 
   defp reduce(a, b) do
-    gcd = Integer.gcd(a,b)
+    gcd = Integer.gcd(a, b)
     {div(a, gcd), div(b, gcd)}
   end
 
@@ -13,10 +13,9 @@ defmodule RationalNumbers do
   """
   @spec add(a :: rational, b :: rational) :: rational
   def add({a1, b1}, {a2, b2}) do
-
-    a = a1*b2 + a2*b1
+    a = a1 * b2 + a2 * b1
     b = b1 * b2
-    reduce a, b
+    reduce(a, b)
   end
 
   @doc """
@@ -34,7 +33,7 @@ defmodule RationalNumbers do
   def multiply({a1, b1}, {a2, b2}) do
     a = a1 * a2
     b = b1 * b2
-    reduce a, b
+    reduce(a, b)
   end
 
   @doc """
@@ -44,7 +43,7 @@ defmodule RationalNumbers do
   def divide_by({a1, b1}, {a2, b2}) do
     a = a1 * b2
     b = b1 * a2
-    reduce a, b
+    reduce(a, b)
   end
 
   @doc """
@@ -52,7 +51,7 @@ defmodule RationalNumbers do
   """
   @spec abs(a :: rational) :: rational
   def abs({a, b}) do
-    reduce Kernel.abs(a), Kernel.abs(b)
+    reduce(Kernel.abs(a), Kernel.abs(b))
   end
 
   @doc """
@@ -60,10 +59,10 @@ defmodule RationalNumbers do
   """
   @spec pow_rational(a :: rational, n :: integer) :: rational
   def pow_rational({a, b}, n) do
-    if n>=0 do
-      reduce a**n, b**n
+    if n >= 0 do
+      reduce(a ** n, b ** n)
     else
-      reduce b**(-n), a**(-n)
+      reduce(b ** -n, a ** -n)
     end
   end
 
@@ -72,9 +71,7 @@ defmodule RationalNumbers do
   """
   @spec pow_real(x :: integer, n :: rational) :: float
   def pow_real(x, {a, b}) do
-    IO.puts "Val = #{x**a} a=#{x**b}"
-
-q = x**(a/b)
+    x ** (a / b)
   end
 
   @doc """
@@ -82,6 +79,6 @@ q = x**(a/b)
   """
   @spec reduce(a :: rational) :: rational
   def reduce({a, b}) do
-    reduce a, b
+    reduce(a, b)
   end
 end
