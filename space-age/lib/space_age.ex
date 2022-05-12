@@ -27,10 +27,10 @@ defmodule SpaceAge do
   aged on 'planet', or an error if 'planet' is not a planet.
   """
   @spec age_on(planet, pos_integer) :: {:ok, float} | {:error, String.t()}
+
+  def age_on(planet, _) when not is_map_key(@planets_year, planet), do: {:error, "not a planet"}
+
   def age_on(planet, seconds) do
-    case @planets_year[planet] do
-      nil -> {:error, "not a planet"}
-      earth_year_ratio -> {:ok, seconds / @earth_year_seconds / earth_year_ratio}
-    end
+    {:ok, seconds / @earth_year_seconds / @planets_year[planet]}
   end
 end
