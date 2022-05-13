@@ -6,12 +6,18 @@
         {
             "label": "Run Test",
             "type": "shell",
-            "command": "mix test --include pending",
+            "command": "mix test",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
+        {
+            "label": "Submit Exercism Solution",
+            "type": "shell",
+            "command": "exercism submit ${relativeFile}",
+            "problemMatcher": []
+        },  
     ]
 }
