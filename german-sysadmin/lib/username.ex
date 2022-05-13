@@ -1,23 +1,17 @@
 defmodule Username do
   def sanitize(username) do
-    username
-    |> Enum.map(&char_translate/1)
-    |> Enum.concat()
-  end
-
-  @german_chars %{
-    ?ä => 'ae',
-    ?ö => 'oe',
-    ?ü => 'ue',
-    ?ß => 'ss'
-  }
-
-  def char_translate(code) do
-    cond do
-      code == ?_ -> '_'
-      code >= ?a and code <= ?z -> [code]
-      code in Map.keys(@german_chars) -> @german_chars[code]
-      true -> []
-    end
+    Enum.reduce(username, '', fn x, acc ->
+      # IO.puts "Value x #{x} and acc = #{acc}"
+      acc ++
+        case x do
+          ?_ -> '_'
+          ?ä -> 'ae'
+          ?ö -> 'oe'
+          ?ü -> 'ue'
+          ?ß -> 'ss'
+          x when x in ?a..?z -> [x]
+          _ -> ''
+        end
+    end)
   end
 end
