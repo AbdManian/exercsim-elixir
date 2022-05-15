@@ -7,31 +7,18 @@ defmodule WineCellar do
     ]
   end
 
-  def filter(cellar, color, opts \\ []) do
-    Keyword.get_values(cellar, color)
-  end
+  def filter(cellar, color, opts \\ []),
+    do:
+      Enum.reduce(
+        opts,
+        Keyword.get_values(cellar, color),
+        &selector(&2, &1)
+      )
 
-  # The functions below do not need to be modified.
+  defp selector(wines, {:year, year}), do: wines |> Enum.filter(fn {_, y, _} -> y == year end)
 
-  defp filter_by_year(wines, year)
-  defp filter_by_year([], _year), do: []
+  defp selector(wines, {:country, country}),
+    do: wines |> Enum.filter(fn {_, _, c} -> c == country end)
 
-  defp filter_by_year([{_, year, _} = wine | tail], year) do
-    [wine | filter_by_year(tail, year)]
-  end
-
-  defp filter_by_year([{_, _, _} | tail], year) do
-    filter_by_year(tail, year)
-  end
-
-  defp filter_by_country(wines, country)
-  defp filter_by_country([], _country), do: []
-
-  defp filter_by_country([{_, _, country} = wine | tail], country) do
-    [wine | filter_by_country(tail, country)]
-  end
-
-  defp filter_by_country([{_, _, _} | tail], country) do
-    filter_by_country(tail, country)
-  end
+  defp selector(wines, []), do: wines
 end
