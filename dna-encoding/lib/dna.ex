@@ -20,24 +20,17 @@ defmodule DNA do
   end
 
   def encode(dna) do
-    # Enum.each(
-    #   dna,
-    #   &(IO.puts "V>>>>>>>>>> Val=#{encode_nucleotide(&1)}")
-    # )
-
-    #
     Enum.reduce(
       dna,
-      << >>,
-      fn c, acc -> IO.puts ">>>>>>>> #{}"
-
-
-
-      #&(<<&2, encode_nucleotide(&1)::size(4)>>)
+      <<>>,
+      &<<&2::bitstring(), encode_nucleotide(&1)::size(4)>>
     )
   end
 
-  def decode(dna) do
-    # Please implement the decode/1 function
-  end
+  def decode(dna), do: decode(dna, '')
+
+  defp decode(<<>>, decoded_data), do: decoded_data
+
+  defp decode(<<nucleotide::size(4), rest::bitstring()>>, decoded_data),
+    do: decode(rest, decoded_data ++ [nucleotide |> decode_nucleotide()])
 end
