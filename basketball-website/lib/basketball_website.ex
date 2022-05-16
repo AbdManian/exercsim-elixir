@@ -1,13 +1,8 @@
 defmodule BasketballWebsite do
-  def extract_from_path(data, path), do: get_in_path(data, path)
-
-  defp extract_access([], data), do: data
-
-  defp extract_access([x | rest], data), do: extract_access(rest, data[x])
-
-  def get_in_path(data, path) do
-    path
-    |> String.split(".")
-    |> extract_access(data)
+  def extract_from_path(data, path) do
+    String.split(path, ".")
+    |> Enum.reduce(data, & &2[&1])
   end
+
+  def get_in_path(data, path), do: get_in(data, String.split(path, "."))
 end
