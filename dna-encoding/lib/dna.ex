@@ -1,43 +1,27 @@
 defmodule DNA do
-  def encode_nucleotide(code_point) do
-    case code_point do
-      ?\s -> 0b0000
-      ?A -> 0b0001
-      ?C -> 0b0010
-      ?G -> 0b0100
-      ?T -> 0b1000
-    end
-  end
+  def encode_nucleotide(?\s), do: 0b0000
+  def encode_nucleotide(?A), do: 0b0001
+  def encode_nucleotide(?C), do: 0b0010
+  def encode_nucleotide(?G), do: 0b0100
+  def encode_nucleotide(?T), do: 0b1000
 
-  def decode_nucleotide(encoded_code) do
-    case encoded_code do
-      0b0000 -> ?\s
-      0b0001 -> ?A
-      0b0010 -> ?C
-      0b0100 -> ?G
-      0b1000 -> ?T
-    end
-  end
+  def decode_nucleotide(0b0000), do: ?\s
+  def decode_nucleotide(0b0001), do: ?A
+  def decode_nucleotide(0b0010), do: ?C
+  def decode_nucleotide(0b0100), do: ?G
+  def decode_nucleotide(0b1000), do: ?T
 
-  def encode(dna) do
-    # Enum.each(
-    #   dna,
-    #   &(IO.puts "V>>>>>>>>>> Val=#{encode_nucleotide(&1)}")
-    # )
+  def encode(dna), do: encode(dna, <<>>)
 
-    #
-    Enum.reduce(
-      dna,
-      << >>,
-      fn c, acc -> IO.puts ">>>>>>>> #{c} #{acc}" end
+  defp encode('', enc_data), do: enc_data
 
+  defp encode([x | rest], enc_data),
+    do: encode(rest, <<enc_data::bitstring(), encode_nucleotide(x)::size(4)>>)
 
+  def decode(dna), do: decode(dna, '')
 
-      #&(<<&2, encode_nucleotide(&1)::size(4)>>)
-    )
-  end
+  defp decode(<<>>, decoded_data), do: decoded_data
 
-  def decode(dna) do
-    # Please implement the decode/1 function
-  end
+  defp decode(<<nucleotide::size(4), rest::bitstring()>>, decoded_data),
+    do: decode(rest, decoded_data ++ [nucleotide |> decode_nucleotide()])
 end
