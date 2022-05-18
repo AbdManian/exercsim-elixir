@@ -1,23 +1,28 @@
 defmodule RemoteControlCar do
-  # Please implement the struct with the specified fields
+  @enforce_keys [:nickname]
+  defstruct battery_percentage: 100, distance_driven_in_meters: 0, nickname: nil
 
-  def new() do
-    # Please implement the new/0 function
-  end
+  def new(nickname \\ "none"), do: %RemoteControlCar{nickname: nickname}
 
-  def new(nickname) do
-    # Please implement the new/1 function
-  end
+  @spec display_distance(%RemoteControlCar{}) :: String.t()
+  def display_distance(%RemoteControlCar{distance_driven_in_meters: miter}), do: "#{miter} meters"
 
-  def display_distance(remote_car) do
-    # Please implement the display_distance/1 function
-  end
+  def display_battery(%RemoteControlCar{battery_percentage: 0}), do: "Battery empty"
 
-  def display_battery(remote_car) do
-    # Please implement the display_battery/1 function
-  end
+  def display_battery(%RemoteControlCar{battery_percentage: battery_value}),
+    do: "Battery at #{battery_value}%"
 
-  def drive(remote_car) do
-    # Please implement the drive/1 function
-  end
+  def drive(remote_car = %RemoteControlCar{battery_percentage: 0}), do: remote_car
+
+  def drive(
+        remote_car = %RemoteControlCar{
+          battery_percentage: battery,
+          distance_driven_in_meters: distance
+        }
+      ),
+      do: %{
+        remote_car
+        | battery_percentage: battery - 1,
+          distance_driven_in_meters: distance + 20
+      }
 end
