@@ -3,7 +3,7 @@ defmodule Newsletter do
 
   def open_log(path), do: File.open!(path, [:write])
 
-  def log_sent_email(pid, email), do: IO.write(pid, "#{email}\n")
+  def log_sent_email(pid, email), do: IO.puts(pid, email)
 
   def close_log(pid), do: File.close(pid)
 
