@@ -1,19 +1,13 @@
 defmodule CaptainsLog do
   @planetary_classes ["D", "H", "J", "K", "L", "M", "N", "R", "T", "Y"]
 
-  def random_planet_class() do
-    # Please implement the random_planet_class/0 function
-  end
+  def random_planet_class(), do: @planetary_classes |> Enum.random()
 
-  def random_ship_registry_number() do
-    # Please implement the random_ship_registry_number/0 function
-  end
+  def random_ship_registry_number(), do: "NCC-#{999 + :rand.uniform(9000)}"
 
-  def random_stardate() do
-    # Please implement the random_stardate/0 function
-  end
+  def random_stardate(), do: 41000.0 + 1000.0 * :rand.uniform()
 
-  def format_stardate(stardate) do
-    # Please implement the format_stardate/1 function
-  end
+  def format_stardate(stardate) when is_float(stardate), do: "#{round(stardate * 10) / 10.0}"
+
+  def format_stardate(_), do: raise(ArgumentError, "Grefti ma ro?")
 end
