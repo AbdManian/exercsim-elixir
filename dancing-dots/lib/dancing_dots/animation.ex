@@ -18,7 +18,6 @@ defmodule DancingDots.Animation do
 end
 
 defmodule DancingDots.Flicker do
-  # @behaviour DancingDots.Animation
   use DancingDots.Animation
 
   @impl DancingDots.Animation
@@ -36,12 +35,15 @@ defmodule DancingDots.Zoom do
 
   @impl true
   def init(opts) do
-    if Keyword.has_key?(opts, :velocity) and is_number(opts[:velocity]) do
-      {:ok, opts}
-    else
-      s = if is_nil(opts[:velocity]), do: "nil", else: "\"#{opts[:velocity]}\""
+    v = opts[:velocity]
 
-      {:error, "The :velocity option is required, and its value must be a number. Got: #{s}"}
+    cond do
+      is_number(v) ->
+        {:ok, opts}
+
+      true ->
+        {:error,
+         "The :velocity option is required, and its value must be a number. Got: #{inspect(v)}"}
     end
   end
 
@@ -49,6 +51,4 @@ defmodule DancingDots.Zoom do
   def handle_frame(dot, pos_integer, opts) do
     %{dot | radius: dot.radius + (pos_integer - 1) * opts[:velocity]}
   end
-
-  # Please implement the module
 end
