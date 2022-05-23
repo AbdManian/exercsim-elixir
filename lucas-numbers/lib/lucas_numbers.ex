@@ -5,7 +5,15 @@ defmodule LucasNumbers do
 
   E.g.: 2, 1, 3, 4, 7, 11, 18, 29, ...
   """
+  def generate(count) when not is_integer(count) or count <= 0,
+    do: raise(ArgumentError, "count must be specified as an integer >= 1")
+
   def generate(count) do
-    # Please implement the generate/1 function
+    Stream.unfold(2, fn
+      2 -> {2, 1}
+      1 -> {1, {2, 1}}
+      {a, b} -> {a + b, {b, a + b}}
+    end)
+    |> Enum.take(count)
   end
 end
