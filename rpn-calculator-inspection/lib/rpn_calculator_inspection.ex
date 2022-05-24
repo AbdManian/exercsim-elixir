@@ -18,6 +18,12 @@ defmodule RPNCalculatorInspection do
   end
 
   def reliability_check(calculator, inputs) do
+    IO.inspect(">>>>>>>>>>>>>>>>>>>>>>")
+    Enum.map(inputs, &start_reliability_check(calculator, &1))
+    |> Enum.reduce()
+
+    IO.inspect("<<<<<<<")
+
     # Please implement the reliability_check/2 function
   end
 
