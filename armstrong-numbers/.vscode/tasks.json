@@ -6,7 +6,7 @@
         {
             "label": "Run Test",
             "type": "shell",
-            "command": "mix test",
+            "command": "mix test --include pending",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
