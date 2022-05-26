@@ -22,9 +22,9 @@ defmodule PerfectNumbers do
 
   def classify(_), do: {:error, "Classification is only possible for natural numbers."}
 
-  def aliquot_sum(1), do: 1
+  defp aliquot_sum(1), do: 1
 
-  def aliquot_sum(number) do
+  defp aliquot_sum(number) do
     1..div(number, 2)
     |> Enum.filter(&(rem(number, &1) == 0))
     |> Enum.sum()
