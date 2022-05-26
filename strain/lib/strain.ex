@@ -6,17 +6,13 @@ defmodule Strain do
   Do not use `Enum.filter`.
   """
   @spec keep(list :: list(any), fun :: (any -> boolean)) :: list(any)
-  def keep(list, fun) do
-    list |> do_keep(fun, [])
-  end
+  def keep([], _), do: []
 
-  defp do_keep([], _, acc), do: acc
-  defp do_keep([h | tail], func, acc) do
-    if func.(h) do
-      do_keep(tail, func, acc ++ [h])
-    else
-      do_keep(tail, func, acc)
-    end
+  def keep([h | tail], fun) do
+    case fun.(h) do
+      true -> [h]
+      _ -> []
+    end ++ keep(tail, fun)
   end
 
   @doc """
@@ -26,18 +22,12 @@ defmodule Strain do
   Do not use `Enum.reject`.
   """
   @spec discard(list :: list(any), fun :: (any -> boolean)) :: list(any)
-  def discard(list, fun) do
-    list |> do_discard(fun, [])
+  def discard([], _), do: []
 
+  def discard([h | tail], fun) do
+    case fun.(h) do
+      false -> [h]
+      _ -> []
+    end ++ discard(tail, fun)
   end
-
-  defp do_discard([], _, acc), do: acc
-  defp do_discard([h | tail], func, acc) do
-    if func.(h) do
-      do_discard(tail, func, acc)
-    else
-      do_discard(tail, func, acc ++ [h])
-    end
-  end
-
 end
