@@ -11,18 +11,18 @@ defmodule Prime do
     |> List.last()
   end
 
-  def do_nth(_, 1), do: [2]
+  defp do_nth(_, 1), do: [2]
 
-  def do_nth(primes, count) when length(primes) == count, do: primes
+  defp do_nth(primes, count) when length(primes) == count, do: primes
 
-  def do_nth(primes, count) do
+  defp do_nth(primes, count) do
     start = List.last(primes)
 
     next_prime(primes, start + 2)
     |> do_nth(count)
   end
 
-  def next_prime(prime_list, n) do
+  defp next_prime(prime_list, n) do
     if isprime(prime_list, n) do
       prime_list ++ [n]
     else
