@@ -8,6 +8,14 @@ defmodule Hamming do
   {:ok, 4}
   """
   @spec hamming_distance([char], [char]) :: {:ok, non_neg_integer} | {:error, String.t()}
+  def hamming_distance(strand1, strand2) when length(strand1) != length(strand2),
+    do: {:error, "strands must be of equal length"}
+
   def hamming_distance(strand1, strand2) do
+    {:ok,
+     strand1
+     |> Enum.zip(strand2)
+     |> Enum.filter(fn {a, b} -> a != b end)
+     |> length()}
   end
 end
